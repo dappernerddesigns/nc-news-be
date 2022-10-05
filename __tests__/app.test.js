@@ -30,3 +30,18 @@ describe("GET /topics/", () => {
         });
     });
 });
+
+describe("GET /articles/:id", () => {
+    test("200:Server responds with a single article object", async () => {
+        const { body } = await request(app).get("/api/articles/1").expect(200);
+        const { article } = body;
+        console.log(body);
+        expect(article).toHaveProperty("article_id");
+        expect(article).toHaveProperty("title");
+        expect(article).toHaveProperty("author");
+        expect(article).toHaveProperty("topic");
+        expect(article).toHaveProperty("body");
+        expect(article).toHaveProperty("created_at");
+        expect(article).toHaveProperty("votes");
+    });
+});
