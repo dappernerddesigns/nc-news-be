@@ -13,3 +13,20 @@ describe("GET /api/", () => {
         expect(body.msg).toBe("Server running ok");
     });
 });
+
+describe("GET /topics/", () => {
+    test("200:Server responds with a list of topic objects", async () => {
+        const { body } = await request(app).get("/api/topics/").expect(200);
+        const { topics } = body;
+        expect(topics.length).toBeGreaterThanOrEqual(3);
+
+        topics.forEach((topic) => {
+            expect(topic).toEqual(
+                expect.objectContaining({
+                    slug: expect.any(String),
+                    description: expect.any(String),
+                })
+            );
+        });
+    });
+});
